@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="monetag" content="50b5e756b145ec11f24d026673d2d26e">
+    <meta name="monetag" content="TU_CODIGO_DE_VERIFICACION_AQUI">
+    
+    <title>Recargas Free Fire LATAM - Diamantes Oficiales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0a0e17;
+            --bg-card: #121826;
+            --bg-card-header: #1a233a;
+            --accent-blue: #00d2ff;
+            --accent-orange: #ff5500;
+            --accent-gold: #ffb700;
+            --accent-green: #25d366;
+            --text-main: #ffffff;
+            --text-sub: #8a99ad;
+            --border-glow: rgba(0, 210, 255, 0.3);
+            --card-border: #1e2d4a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 80px;
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(0, 210, 255, 0.15) 0%, transparent 70%),
+                radial-gradient(circle at 80% 80%, rgba(255, 85, 0, 0.1) 0%, transparent 50%);
+        }
+
+        .top-bar {
+            background: linear-gradient(90deg, #111, var(--bg-card-header), #111);
+            border-bottom: 1px solid var(--border-glow);
+            text-align: center;
+            padding: 8px 15px;
+            font-size: 14px;
+            color: var(--accent-gold);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .ad-banner-placeholder {
+            max-width: 900px;
+            margin: 15px auto;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .header h1 {
+            font-family: 'Teko', sans-serif;
+            font-size: 48px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: linear-gradient(180deg, #ffffff 0%, #a0c4ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+            line-height: 1;
+        }
+
+        .header p {
+            color: var(--accent-blue);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 26px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 25px 0 15px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title span.step-num {
+            background: var(--accent-blue);
+            color: #000;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .id-input-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .form-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .form-group input {
+            flex: 1;
+            min-width: 200px;
+            background: #080c14;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.2);
+        }
+
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 15px;
+        }
+
+        .pkg-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            position: relative;
+        }
+
+        .pkg-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent-blue);
+            box-shadow: 0 6px 20px rgba(0, 210, 255, 0.25);
+        }
+
+        .pkg-card.selected {
+            border: 2px solid var(--accent-blue);
+            background: linear-gradient(180deg, #141f36 0%, #121826 100%);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .pkg-header {
+            background: var(--bg-card-header);
+            padding: 12px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .pkg-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .diamond-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--accent-blue);
+            clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+            display: inline-block;
+        }
+
+        .pkg-bonus {
+            background: rgba(255, 85, 0, 0.2);
+            color: var(--accent-orange);
+            font-size: 12px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 85, 0, 0.4);
+        }
+
+        .pkg-body {
+            padding: 15px;
+        }
+
+        .price-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.2);
+            font-size: 14px;
+        }
+
+        .price-option:last-child {
+            margin-bottom: 0;
+        }
+
+        .price-tag {
+            font-weight: 700;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .badge-tag {
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-promo {
+            background: #ff5500;
+            color: #fff;
+        }
+
+        .badge-standard {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-sub);
+        }
+
+        .payment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border: 2px solid var(--accent-blue);
+            box-shadow: 0 0 10px rgba(0, 210, 255, 0.15);
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .spei-badge {
+            background: #ffffff;
+            color: #0b2341;
+            font-weight: 900;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+
+        .tracking-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .tracking-search {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .tracking-search input {
+            flex: 1;
+            background: #080c14;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 10px 14px;
+            color: #fff;
+        }
+
+        .btn {
+            background: linear-gradient(90deg, #00d2ff, #0072ff);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .btn-pay {
+            width: 100%;
+            background: linear-gradient(90deg, #ff5500, #ff2200);
+            font-size: 20px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.4);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(90deg, #25d366, #128c7e);
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border: 1px solid var(--accent-blue);
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            padding: 25px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px; right: 20px;
+            color: var(--text-sub);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .bank-details {
+            background: #080c14;
+            border: 1px dashed var(--accent-blue);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .bank-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            align-items: center;
+        }
+
+        .bank-row span:first-child { color: var(--text-sub); }
+        .bank-row span:last-child { color: #fff; font-weight: 700; word-break: break-all; text-align: right; }
+
+        .timeline {
+            margin-top: 15px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--card-border);
+        }
+
+        .timeline-item {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -26px; top: 3px;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: var(--card-border);
+        }
+
+        .timeline-item.active::before {
+            background: var(--accent-blue);
+            box-shadow: 0 0 8px var(--accent-blue);
+        }
+
+        .timeline-item.done::before {
+            background: #00ff88;
+        }
+
+        .fixed-bottom {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            background: var(--bg-card-header);
+            border-top: 1px solid var(--border-glow);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .summary-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-title { font-size: 12px; color: var(--text-sub); }
+        .summary-price { font-size: 22px; font-weight: 700; color: #fff; }
+
+        @media (max-width: 600px) {
+            .header h1 { font-size: 36px; }
+            .packages-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+    
+    <!-- PEGA AQUÍ TUS SCRIPTS DE MONETAG (OnClick / In-Page Push / Smart Tag) -->
+</head>
+<body>
+
+    <div class="top-bar">
+        ⚡ RECARGAS DIRECTAS VÍA SPEI Y TRANSFERENCIA BANXICO - AUTOMÁTICO EN MENOS DE 5 MINUTOS ⚡
+    </div>
+
+    <!-- Contenedor para Anuncio Banner de Monetag si deseas -->
+    <div class="ad-banner-placeholder">
+        <!-- Pega el código de Banner Banner Monetag Aquí -->
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>FREE FIRE LATAM</h1>
+            <p>Centro Oficial de Recargas | México & Latinoamérica</p>
+        </header>
+
+        <!-- PASO 1 -->
+        <section>
+            <div class="section-title">
+                <span class="step-num">1</span>
+                <h2>Ingresa tu ID de Jugador</h2>
+            </div>
+            <div class="id-input-card">
+                <div class="form-group">
+                    <input type="number" id="playerId" placeholder="Ejemplo: 2849104829" required>
+                    <button class="btn" onclick="verifyId()">Verificar ID</button>
+                </div>
+                <small id="idStatus" style="color: var(--accent-blue); display: block; margin-top: 8px; font-weight: 600;"></small>
+            </div>
+        </section>
+
+        <!-- PASO 2 -->
+        <section>
+            <div class="section-title">
+                <span class="step-num">2</span>
+                <h2>Selecciona Paquete de Diamantes</h2>
+            </div>
+            <div class="packages-grid">
+                
+                <div class="pkg-card" onclick="selectPackage(this, '100+10 Diamantes', 14)">
+                    <div class="pkg-header">
+                        <div class="pkg-title"><span class="diamond-icon"></span> 100+10 Diamantes</div>
+                        <span class="pkg-bonus">+10 Bonus</span>
+                    </div>
+                    <div class="pkg-body">
+                        <div class="price-option">
+                            <span class="badge-tag badge-promo">1 vez por ID</span>
+                            <span class="price-tag">$14 MXN</span>
+                        </div>
+                        <div class="price-option">
+                            <span class="badge-tag badge-standard">Ilimitado</span>
+                            <span class="price-tag">$16 MXN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage(this, '310+31 Diamantes', 43)">
+                    <div class="pkg-header">
+                        <div class="pkg-title"><span class="diamond-icon"></span> 310+31 Diamantes</div>
+                        <span class="pkg-bonus">+31 Bonus</span>
+                    </div>
+                    <div class="pkg-body">
+                        <div class="price-option">
+                            <span class="badge-tag badge-promo">1 vez por ID</span>
+                            <span class="price-tag">$43 MXN</span>
+                        </div>
+                        <div class="price-option">
+                            <span class="badge-tag badge-standard">Ilimitado</span>
+                            <span class="price-tag">$47 MXN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage(this, '520+52 Diamantes', 70)">
+                    <div class="pkg-header">
+                        <div class="pkg-title"><span class="diamond-icon"></span> 520+52 Diamantes</div>
+                        <span class="pkg-bonus">+52 Bonus</span>
+                    </div>
+                    <div class="pkg-body">
+                        <div class="price-option">
+                            <span class="badge-tag badge-promo">1 vez por ID</span>
+                            <span class="price-tag">$70 MXN</span>
+                        </div>
+                        <div class="price-option">
+                            <span class="badge-tag badge-standard">Ilimitado</span>
+                            <span class="price-tag">$72 MXN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage(this, '1060+106 Diamantes', 130)">
+                    <div class="pkg-header">
+                        <div class="pkg-title"><span class="diamond-icon"></span> 1060+106 Diamantes</div>
+                        <span class="pkg-bonus">+106 Bonus</span>
+                    </div>
+                    <div class="pkg-body">
+                        <div class="price-option">
+                            <span class="badge-tag badge-promo">1 vez por ID</span>
+                            <span class="price-tag">$130 MXN</span>
+                        </div>
+                        <div class="price-option">
+                            <span class="badge-tag badge-standard">Ilimitado</span>
+                            <span class="price-tag">$140 MXN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage(this, '2180+218 Diamantes', 248)">
+                    <div class="pkg-header">
+                        <div class="pkg-title"><span class="diamond-icon"></span> 2180+218 Diamantes</div>
+                        <span class="pkg-bonus">+218 Bonus</span>
+                    </div>
+                    <div class="pkg-body">
+                        <div class="price-option">
+                            <span class="badge-tag badge-promo">1 vez por ID</span>
+                            <span class="price-tag">$248 MXN</span>
+                        </div>
+                        <div class="price-option">
+                            <span class="badge-tag badge-standard">Ilimitado</span>
+                            <span class="price-tag">$258 MXN</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage(this, '5600+560 Diamantes', 630)">
+                    <div class="pkg-header">
+                        <div class="pkg-title"><span class="diamond-icon"></span> 5600+560 Diamantes</div>
+                        <span class="pkg-bonus">+560 Bonus</span>
+                    </div>
+                    <div class="pkg-body">
+                        <div class="price-option">
+                            <span class="badge-tag badge-promo">1 vez por ID</span>
+                            <span class="price-tag">$630 MXN</span>
+                        </div>
+                        <div class="price-option">
+                            <span class="badge-tag badge-standard">Ilimitado</span>
+                            <span class="price-tag">$640 MXN</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- PASO 3 -->
+        <section>
+            <div class="section-title">
+                <span class="step-num">3</span>
+                <h2>Método de Pago</h2>
+            </div>
+            <div class="payment-card">
+                <div class="payment-info">
+                    <span class="spei-badge">SPEI</span>
+                    <div>
+                        <strong>Transferencia Bancaria SPEI / Débito</strong>
+                        <p style="font-size: 12px; color: var(--text-sub);">Acreditación inmediata 24/7 sin comisiones extra</p>
+                    </div>
+                </div>
+                <input type="radio" checked readOnly style="accent-color: var(--accent-blue); transform: scale(1.3);">
+            </div>
+        </section>
+
+        <!-- RASTREO -->
+        <section>
+            <div class="section-title">
+                <span class="step-num">🔍</span>
+                <h2>Rastrear Pedido en Tiempo Real</h2>
+            </div>
+            <div class="tracking-card">
+                <p style="margin-bottom: 12px; font-size: 14px; color: var(--text-sub);">Ingresa tu Folio de Pedido para consultar el estatus de acreditación:</p>
+                <div class="tracking-search">
+                    <input type="text" id="trackInput" placeholder="Ej: FF-839210">
+                    <button class="btn" onclick="trackOrder()">Consultar</button>
+                </div>
+                <div id="trackingResult" style="display: none; margin-top: 15px;"></div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Barra Inferior -->
+    <div class="fixed-bottom">
+        <div class="summary-text">
+            <span class="summary-title">Total a pagar:</span>
+            <span class="summary-price" id="selectedPriceDisplay">$0 MXN</span>
+        </div>
+        <button class="btn btn-pay" style="width: auto; padding: 10px 30px;" onclick="openPaymentModal()">COMPRAR AHORA</button>
+    </div>
+
+    <!-- MODAL DE PAGO -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closePaymentModal()">&times;</span>
+            <h2 style="font-family: 'Teko', sans-serif; font-size: 28px; color: var(--accent-blue);">DATOS DE PAGO Y TRANSFERENCIA</h2>
+            <p style="font-size: 13px; color: var(--text-sub); margin-bottom: 10px;">Realiza tu pago por la cantidad exacta usando cualquiera de las opciones:</p>
+            
+            <div class="bank-details">
+                <div class="bank-row"><span>CLABE SPEI:</span> <span style="color: var(--accent-gold);">012180015469706233</span></div>
+                <div class="bank-row"><span>N° de Tarjeta:</span> <span style="color: var(--accent-gold);">4152 3144 7359 9028</span></div>
+                <div class="bank-row"><span>Monto exacto:</span> <span id="modalAmount">$0 MXN</span></div>
+                <div class="bank-row"><span>Referencia / Folio:</span> <span id="modalRef" style="color: var(--accent-orange);">FF-000000</span></div>
+            </div>
+
+            <p style="font-size: 13px; color: #fff; text-align: center; font-weight: 600;">⚠️ Importante: Una vez realizado el pago, envía tu comprobante a nuestro WhatsApp para acreditar tus diamantes.</p>
+            
+            <a id="whatsappBtn" class="btn-whatsapp" href="#" target="_blank">
+                💬 ENVIAR COMPROBANTE POR WHATSAPP
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let selectedPkgName = '';
+        let selectedPrice = 0;
+        let currentRef = '';
+
+        function verifyId() {
+            const id = document.getElementById('playerId').value;
+            const status = document.getElementById('idStatus');
+            if(id.length >= 8) {
+                status.innerText = "✓ ID Encontrado: Jugador_FF_Latam (Región EE.UU./LATAM)";
+                status.style.color = "#00ff88";
+            } else {
+                status.innerText = "✕ Por favor ingresa un ID válido (mínimo 8 dígitos).";
+                status.style.color = "#ff5500";
+            }
+        }
+
+        function selectPackage(cardElement, name, price) {
+            document.querySelectorAll('.pkg-card').forEach(c => c.classList.remove('selected'));
+            cardElement.classList.add('selected');
+            
+            selectedPkgName = name;
+            selectedPrice = price;
+            
+            document.getElementById('selectedPriceDisplay').innerText = '$' + price + ' MXN';
+        }
+
+        function openPaymentModal() {
+            const id = document.getElementById('playerId').value;
+            if(!id) {
+                alert('Por favor ingresa tu ID de jugador de Free Fire antes de continuar.');
+                return;
+            }
+            if(selectedPrice === 0) {
+                alert('Por favor selecciona un paquete de diamantes.');
+                return;
+            }
+
+            currentRef = 'FF-' + Math.floor(100000 + Math.random() * 900000);
+            document.getElementById('modalAmount').innerText = '$' + selectedPrice + ' MXN';
+            document.getElementById('modalRef').innerText = currentRef;
+
+            const message = `¡Hola! Ya realicé mi pago de recarga.%0A%0A📌 *ID Jugador:* ${id}%0A💎 *Paquete:* ${selectedPkgName}%0A💰 *Monto:* $${selectedPrice} MXN%0A🧾 *Folio:* ${currentRef}%0A%0AAdjunto mi comprobante de pago:`;
+            const waLink = `https://wa.me/525570631464?text=${message}`;
+            
+            const waBtn = document.getElementById('whatsappBtn');
+            waBtn.href = waLink;
+            waBtn.onclick = function() {
+                closePaymentModal();
+                document.getElementById('trackInput').value = currentRef;
+                trackOrder();
+            };
+
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        function trackOrder() {
+            const trackVal = document.getElementById('trackInput').value.trim();
+            const resDiv = document.getElementById('trackingResult');
+            
+            if(!trackVal) {
+                alert('Ingresa un número de folio.');
+                return;
+            }
+
+            resDiv.style.display = 'block';
+            resDiv.innerHTML = `
+                <div style="background: #080c14; padding: 15px; border-radius: 8px; border: 1px solid var(--accent-blue);">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <strong>Folio: ${trackVal}</strong>
+                        <span style="color: var(--accent-gold); font-weight: 700;">ESPERANDO COMPROBANTE / PAGO</span>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item done">
+                            <strong>Orden Creada</strong>
+                            <p style="font-size: 12px; color: var(--text-sub);">Solicitud registrada correctamente.</p>
+                        </div>
+                        <div class="timeline-item active">
+                            <strong>Recepción de Comprobante WhatsApp</strong>
+                            <p style="font-size: 12px; color: var(--text-sub);">Esperando envío de ficha por WhatsApp (+52 55 7063 1464)...</p>
+                        </div>
+                        <div class="timeline-item">
+                            <strong>Envío de Diamantes a ID</strong>
+                            <p style="font-size: 12px; color: var(--text-sub);">Acreditación directa en el juego en minutos.</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>
+
