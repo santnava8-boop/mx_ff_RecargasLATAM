@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MX_recargasff - Tienda Oficial de Recargas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0d14;
+            --bg-card: rgba(18, 24, 38, 0.85);
+            --neon-red: #ff2a5f;
+            --neon-orange: #ff7b00;
+            --neon-cyan: #00f0ff;
+            --neon-green: #25d366;
+            --text-main: #ffffff;
+            --text-sub: #a0aec0;
+            --border-glow: rgba(255, 42, 95, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-main);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 42, 95, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.15) 0%, transparent 40%);
+            min-height: 100vh;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background: rgba(10, 13, 20, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--neon-red);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 25px rgba(255, 42, 95, 0.2);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 10px rgba(255, 42, 95, 0.3);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .nav-tab {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-main);
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+        }
+
+        .nav-tab:hover {
+            border-color: var(--neon-cyan);
+            color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(45deg, var(--neon-red), var(--neon-orange));
+            color: #fff;
+            border: none;
+            box-shadow: 0 0 15px rgba(255, 42, 95, 0.5);
+        }
+
+        .user-widget {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-google-login {
+            background: #ffffff;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .btn-google-login:hover {
+            background: #f1f1f1;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .promo-banner {
+            background: linear-gradient(90deg, #ff2a5f, #7928ca);
+            border-radius: 12px;
+            padding: 15px 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(255, 42, 95, 0.3);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-left: 4px solid var(--neon-red);
+            padding-left: 12px;
+        }
+
+        .user-dashboard {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(255, 42, 95, 0.1));
+            border: 1px solid var(--neon-cyan);
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 2px solid var(--neon-cyan);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .history-table th, .history-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .history-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--neon-cyan);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .game-card {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .game-card:hover, .game-card.active {
+            border-color: var(--neon-red);
+            box-shadow: 0 0 15px var(--border-glow);
+            transform: translateY(-3px);
+        }
+
+        .game-card i {
+            font-size: 2rem;
+            margin-bottom: 8px;
+            color: var(--neon-orange);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 15px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            transition: 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(255, 42, 95, 0.3);
+            border-color: var(--neon-red);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--neon-red);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .price-option {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+
+        .price-option:hover {
+            border-color: var(--neon-cyan);
+            background: rgba(0, 240, 255, 0.1);
+        }
+
+        .points-reward {
+            font-size: 0.8rem;
+            color: var(--neon-green);
+            font-weight: 700;
+            margin-top: 5px;
+            display: block;
+        }
+
+        .checkout-section {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .payment-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .bank-card {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--neon-orange);
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(255, 123, 0, 0.2);
+            position: relative;
+        }
+
+        .bank-card.primary {
+            border-width: 3px;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+        }
+
+        .bank-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: var(--neon-orange);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .bank-card.primary .bank-title {
+            color: var(--neon-cyan);
+        }
+
+        .bank-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 2px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 12px;
+            border-radius: 12px;
+            border: 2px dashed var(--neon-cyan);
+            margin: 15px 0;
+            word-break: break-all;
+        }
+
+        .proof-alert {
+            background: linear-gradient(90deg, #ff2a5f, #ff7b00);
+            border: 2px solid #fff;
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #ffffff;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px rgba(255, 42, 95, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-sub);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-control:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(45deg, #25d366, #128c7e);
+            color: #fff;
+            font-weight: 900;
+            font-size: 1.3rem;
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            transition: 0.3s;
+            box-shadow: 0 5px 25px rgba(37, 211, 102, 0.5);
+            text-transform: uppercase;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 35px rgba(37, 211, 102, 0.8);
+        }
+
+        .btn-redeem {
+            background: linear-gradient(45deg, var(--neon-cyan), #0088ff);
+            color: #000;
+            font-weight: 800;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-redeem:hover {
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card h4 {
+            font-size: 2rem;
+            color: var(--neon-cyan);
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-item h4 {
+            color: var(--neon-orange);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-social {
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .btn-tiktok { background: #000; border: 1px solid #333; }
+        .btn-ws { background: #25d366; }
+
+        footer {
+            text-align: center;
+            color: var(--text-sub);
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <i class="fa-solid fa-fire-flame-curved" style="color: var(--neon-red);"></i>
+            MX_recargasff
+        </div>
+        <nav>
+            <button class="nav-tab active" onclick="switchTab('tienda', this)">
+                <i class="fa-solid fa-store"></i> Tienda
+            </button>
+            <button class="nav-tab" onclick="switchTab('pagos', this)">
+                <i class="fa-solid fa-credit-card"></i> Métodos de Pago
+            </button>
+            <button class="nav-tab" onclick="switchTab('cuenta', this)">
+                <i class="fa-solid fa-user-gear"></i> Mi Cuenta / Historial
+            </button>
+            <button class="nav-tab" onclick="switchTab('anuncios', this)">
+                <i class="fa-solid fa-rectangle-ad"></i> Ganar Saldo
+            </button>
+            <button class="nav-tab" onclick="switchTab('afiliados', this)">
+                <i class="fa-solid fa-users"></i> Afiliados
+            </button>
+            <button class="nav-tab" onclick="switchTab('soporte', this)">
+                <i class="fa-solid fa-headset"></i> Soporte / FAQ
+            </button>
+        </nav>
+
+        <div id="authWidget">
+            <button class="btn-google-login" onclick="loginWithGoogle()">
+                <i class="fa-brands fa-google" style="color: #4285F4;"></i> Iniciar sesión con Google
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="promo-banner">
+            ⚡ RECARGAS INSTANTÁNEAS Y SEGURAS - GANA PUNTOS RECOMPENSA EN CADA COMPRA ⚡
+        </div>
+
+        <!-- PESTAÑA TIENDA -->
+        <div id="tienda" class="tab-content active">
+            <h2 class="section-title">1. Selecciona tu Juego</h2>
+            <div class="games-grid">
+                <div class="game-card active">
+                    <i class="fa-solid fa-fire"></i>
+                    <p>Free Fire</p>
+                </div>
+                <div class="game-card">
+                    <i class="fa-solid fa-gamepad"></i>
+                    <p>Roblox</p>
+                </div>
+                <div class="game-card">
+                    <i class="fa-solid fa-crosshairs"></i>
+                    <p>Call of Duty</p>
+                </div>
+                <div class="game-card">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <p>Mobile Legends</p>
+                </div>
+                <div class="game-card">
+                    <i class="fa-solid fa-cube"></i>
+                    <p>Brawl Stars</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">2. Paquetes de Diamantes (MXN)</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-badge">Promoción</div>
+                    <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 100 + 10 Diamantes</div>
+                    <div class="price-option"><span>1 Vez por ID</span><strong style="color: var(--neon-orange);">$14 MXN</strong></div>
+                    <div class="price-option"><span>Ilimitado</span><strong style="color: var(--neon-orange);">$16 MXN</strong></div>
+                    <span class="points-reward">🎁 Acumulas +15 Puntos Recompensa</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-badge">Populares</div>
+                    <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 310 + 31 Diamantes</div>
+                    <div class="price-option"><span>1 Vez por ID</span><strong style="color: var(--neon-orange);">$43 MXN</strong></div>
+                    <div class="price-option"><span>Ilimitado</span><strong style="color: var(--neon-orange);">$47 MXN</strong></div>
+                    <span class="points-reward">🎁 Acumulas +45 Puntos Recompensa</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 520 + 52 Diamantes</div>
+                    <div class="price-option"><span>1 Vez por ID</span><strong style="color: var(--neon-orange);">$70 MXN</strong></div>
+                    <div class="price-option"><span>Ilimitado</span><strong style="color: var(--neon-orange);">$72 MXN</strong></div>
+                    <span class="points-reward">🎁 Acumulas +70 Puntos Recompensa</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-badge">Mejor Valor</div>
+                    <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 1060 + 106 Diamantes</div>
+                    <div class="price-option"><span>1 Vez por ID</span><strong style="color: var(--neon-orange);">$130 MXN</strong></div>
+                    <div class="price-option"><span>Ilimitado</span><strong style="color: var(--neon-orange);">$140 MXN</strong></div>
+                    <span class="points-reward">🎁 Acumulas +140 Puntos Recompensa</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 2180 + 218 Diamantes</div>
+                    <div class="price-option"><span>1 Vez por ID</span><strong style="color: var(--neon-orange);">$248 MXN</strong></div>
+                    <div class="price-option"><span>Ilimitado</span><strong style="color: var(--neon-orange);">$258 MXN</strong></div>
+                    <span class="points-reward">🎁 Acumulas +260 Puntos Recompensa</span>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-badge">PRO</div>
+                    <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 5600 + 560 Diamantes</div>
+                    <div class="price-option"><span>1 Vez por ID</span><strong style="color: var(--neon-orange);">$630 MXN</strong></div>
+                    <div class="price-option"><span>Ilimitado</span><strong style="color: var(--neon-orange);">$640 MXN</strong></div>
+                    <span class="points-reward">🎁 Acumulas +650 Puntos Recompensa</span>
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <h3 style="color: var(--neon-cyan); margin-bottom: 15px;"><i class="fa-solid fa-paper-plane"></i> Formulario de Pedido Rápido</h3>
+                <form onsubmit="sendToWhatsApp(event)">
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-id-card"></i> ID del Jugador</label>
+                        <input type="text" id="playerId" class="form-control" placeholder="Ej: 123456789" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-box"></i> Selecciona tu Paquete</label>
+                        <select id="package" class="form-control" required>
+                            <option value="">-- Escoge tus diamantes --</option>
+                            <option value="100+10 Diamantes ($14 / $16 MXN)">100+10 Diamantes ($14 / $16 MXN) [+15 Pts]</option>
+                            <option value="310+31 Diamantes ($43 / $47 MXN)">310+31 Diamantes ($43 / $47 MXN) [+45 Pts]</option>
+                            <option value="520+52 Diamantes ($70 / $72 MXN)">520+52 Diamantes ($70 / $72 MXN) [+70 Pts]</option>
+                            <option value="1060+106 Diamantes ($130 / $140 MXN)">1060+106 Diamantes ($130 / $140 MXN) [+140 Pts]</option>
+                            <option value="2180+218 Diamantes ($248 / $258 MXN)">2180+218 Diamantes ($248 / $258 MXN) [+260 Pts]</option>
+                            <option value="5600+560 Diamantes ($630 / $640 MXN)">5600+560 Diamantes ($630 / $640 MXN) [+650 Pts]</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                        <input type="email" id="userEmail" class="form-control" placeholder="tu-correo@gmail.com" required>
+                    </div>
+
+                    <div class="proof-alert" style="margin-bottom: 25px;">
+                        📸 MANDAR COMPROBANTE O CAPTURA DE LA TRANSFERENCIA AL WHATSAPP
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 1.8rem;"></i> ENVIAR PEDIDO Y ACUMULAR PUNTOS
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- PESTAÑA MÉTODOS DE PAGO -->
+        <div id="pagos" class="tab-content">
+            <h2 class="section-title"><i class="fa-solid fa-wallet"></i> Dónde y Cómo Realizar Tu Pago</h2>
+            <div class="payment-methods-grid">
+                <div class="bank-card primary">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--neon-cyan); color: #000; padding: 2px 12px; border-radius: 12px; font-weight: 800; font-size: 0.75rem;">RECOMENDADO</div>
+                    <div class="bank-title">💳 TRANSFERIR A ESTE NÚMERO DE CUENTA</div>
+                    <p style="color: var(--text-sub); font-size: 0.9rem;">(Transferencia SPEI o Tarjeta Débito)</p>
+                    <div class="bank-number">4152 3144 7359 9028</div>
+                    <p style="font-size: 0.9rem; color: #aaa;">Titular: MX_recargasff | Banco Directo</p>
+                </div>
+
+                <div class="bank-card">
+                    <div class="bank-title" style="color: #ffcc00;"><i class="fa-solid fa-store"></i> DEPÓSITO EN OXXO / EFECTIVO</div>
+                    <p style="color: var(--text-sub); font-size: 0.9rem;">(Dicta estos 16 dígitos en el cajero del OXXO)</p>
+                    <div class="bank-number" style="border-color: #ffcc00; color: #ffcc00;">4152 3144 7359 9028</div>
+                    <p style="font-size: 0.9rem; color: #aaa;">Cobranza inmediata en caja</p>
+                </div>
+            </div>
+
+            <div class="proof-alert">
+                📸 MANDAR COMPROBANTE O CAPTURA DE LA TRANSFERENCIA AL WHATSAPP
+            </div>
+        </div>
+
+        <!-- PESTAÑA MI CUENTA / HISTORIAL -->
+        <div id="cuenta" class="tab-content">
+            <h2 class="section-title"><i class="fa-solid fa-id-card-clip"></i> Mi Cuenta y Puntos de Fidelidad</h2>
+
+            <div class="user-dashboard">
+                <div class="user-info">
+                    <img id="userPhoto" src="https://via.placeholder.com/55/00f0ff/000000?text=G" alt="Usuario" class="user-avatar">
+                    <div>
+                        <h3 id="userName" style="color: #fff;">Usuario Invitado</h3>
+                        <p id="userEmailText" style="color: var(--text-sub); font-size: 0.9rem;">Inicia sesión con Google para ver tus puntos</p>
+                    </div>
+                </div>
+
+                <div style="text-align: right;">
+                    <p style="color: var(--text-sub); font-size: 0.85rem;">Puntos Disponibles</p>
+                    <h2 id="accountPoints" style="color: var(--neon-cyan); font-size: 2.2rem;">0 PTS</h2>
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <h3 style="color: var(--neon-orange); margin-bottom: 15px;"><i class="fa-solid fa-gift"></i> Canjear Puntos por Diamantes Gratis</h3>
+                <p style="color: var(--text-sub); margin-bottom: 20px;">Utiliza los puntos generados por tus compras previas para reclamar diamantes sin costo adicional.</p>
+
+                <div class="products-grid">
+                    <div class="product-card" style="border-color: var(--neon-cyan);">
+                        <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 100 Diamantes</div>
+                        <p style="color: var(--text-sub); margin-bottom: 15px;">Costo de canje: <strong>150 Puntos</strong></p>
+                        <button class="btn-redeem" onclick="redeemPoints(150, 100)">Canjear 100 💎</button>
+                    </div>
+
+                    <div class="product-card" style="border-color: var(--neon-cyan);">
+                        <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 310 Diamantes</div>
+                        <p style="color: var(--text-sub); margin-bottom: 15px;">Costo de canje: <strong>400 Puntos</strong></p>
+                        <button class="btn-redeem" onclick="redeemPoints(400, 310)">Canjear 310 💎</button>
+                    </div>
+
+                    <div class="product-card" style="border-color: var(--neon-cyan);">
+                        <div class="product-title"><i class="fa-solid fa-gem" style="color: #00f0ff;"></i> 520 Diamantes</div>
+                        <p style="color: var(--text-sub); margin-bottom: 15px;">Costo de canje: <strong>650 Puntos</strong></p>
+                        <button class="btn-redeem" onclick="redeemPoints(650, 520)">Canjear 520 💎</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="checkout-section">
+                <h3 style="color: var(--neon-cyan); margin-bottom: 15px;"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Compras y Pedidos</h3>
+                <div style="overflow-x: auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>ID Jugador</th>
+                                <th>Paquete</th>
+                                <th>Estado</th>
+                                <th>Puntos Ganados</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyBody">
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: #888;">No hay recargas registradas aún. Haz tu primera compra para ver el historial.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA GANAR SALDO -->
+        <div id="anuncios" class="tab-content">
+            <h2 class="section-title"><i class="fa-solid fa-coins"></i> Centro de Recompensas y Anuncios</h2>
+            <div class="checkout-section" style="text-align: center;">
+                <h3 style="color: var(--neon-cyan); font-size: 1.6rem; margin-bottom: 10px;">¡Consigue Puntos Gratis Viendo Videos!</h3>
+                <p style="color: var(--text-sub); margin-bottom: 20px;">Por cada anuncio corto completado, acumularás puntos directamente en tu cuenta.</p>
+                <button class="btn-submit" onclick="watchAdSim()" style="max-width: 350px; margin: 0 auto; font-size: 1.1rem; background: linear-gradient(45deg, var(--neon-cyan), #0088ff); color: #000;">
+                    <i class="fa-solid fa-play"></i> Ver Video Anuncio (+50 Puntos)
+                </button>
+            </div>
+        </div>
+
+        <!-- PESTAÑA AFILIADOS -->
+        <div id="afiliados" class="tab-content">
+            <h2 class="section-title"><i class="fa-solid fa-handshake"></i> Programa Oficial de Vendedores y Afiliados</h2>
+            <div class="checkout-section">
+                <p style="color: var(--text-sub); line-height: 1.6; margin-bottom: 20px;">
+                    ¿Quieres iniciar tu propio negocio de recargas? Obtén precios de mayoreo y comisiones por ventas.
+                </p>
+                <div class="social-links">
+                    <a href="https://www.tiktok.com/@11.11.11.11.11.11.11.117" target="_blank" class="btn-social btn-tiktok">
+                        <i class="fa-brands fa-tiktok"></i> TikTok Oficial / Afiliados
+                    </a>
+                    <a href="https://wa.me/525570631464?text=Hola,%20quiero%20registrarme%20como%20Afiliado" target="_blank" class="btn-social btn-ws">
+                        <i class="fa-brands fa-whatsapp"></i> Registrarme por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- PESTAÑA SOPORTE -->
+        <div id="soporte" class="tab-content">
+            <h2 class="section-title"><i class="fa-solid fa-headset"></i> Soporte Técnico y Preguntas Frecuentes</h2>
+            <div class="checkout-section">
+                <a href="https://wa.me/525570631464?text=Hola,%20necesito%20soporte" target="_blank" class="btn-social btn-ws" style="display: inline-flex;">
+                    <i class="fa-brands fa-whatsapp" style="font-size: 1.4rem;"></i> Chatear con Soporte (+52 55 7063 1464)
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 MX_recargasff - Todos los derechos reservados. Tienda independiente de recargas.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        let currentUser = {
+            isLoggedIn: false,
+            name: "Invitado",
+            email: "",
+            photo: "https://via.placeholder.com/55/00f0ff/000000?text=G",
+            points: 0,
+            history: []
+        };
+
+        window.onload = function() {
+            const savedUser = localStorage.getItem('mx_user_data');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                updateUI();
+            }
+        };
+
+        function loginWithGoogle() {
+            const mockName = prompt("Simulación de Google Login:\nIngresa tu Nombre:", "Jugador PRO");
+            const mockEmail = prompt("Ingresa tu Correo de Google:", "jugador@gmail.com");
+
+            if (mockName && mockEmail) {
+                currentUser.isLoggedIn = true;
+                currentUser.name = mockName;
+                currentUser.email = mockEmail;
+                currentUser.photo = "https://ui-avatars.com/api/?name=" + encodeURIComponent(mockName) + "&background=00f0ff&color=000";
+                
+                if (currentUser.points === 0) {
+                    currentUser.points += 20;
+                    alert("🎉 ¡Bienvenido a MX_recargasff! Te hemos regalado +20 Puntos de bienvenida.");
+                }
+
+                saveData();
+                updateUI();
+            }
+        }
+
+        function logout() {
+            currentUser.isLoggedIn = false;
+            currentUser.name = "Invitado";
+            currentUser.email = "";
+            currentUser.photo = "https://via.placeholder.com/55/00f0ff/000000?text=G";
+            saveData();
+            updateUI();
+        }
+
+        function saveData() {
+            localStorage.setItem('mx_user_data', JSON.stringify(currentUser));
+        }
+
+        function updateUI() {
+            const authWidget = document.getElementById('authWidget');
+            const userName = document.getElementById('userName');
+            const userEmailText = document.getElementById('userEmailText');
+            const userPhoto = document.getElementById('userPhoto');
+            const accountPoints = document.getElementById('accountPoints');
+
+            if (currentUser.isLoggedIn) {
+                authWidget.innerHTML = `
+                    <div class="user-widget">
+                        <img src="${currentUser.photo}" style="width: 30px; height: 30px; border-radius: 50%;">
+                        <span style="font-size: 0.9rem; font-weight: 700;">${currentUser.name}</span>
+                        <span style="color: var(--neon-cyan); font-weight: 800;">(${currentUser.points} Pts)</span>
+                        <i class="fa-solid fa-right-from-bracket" onclick="logout()" style="cursor: pointer; color: var(--neon-red); margin-left: 5px;" title="Cerrar Sesión"></i>
+                    </div>
+                `;
+                userName.innerText = currentUser.name;
+                userEmailText.innerText = currentUser.email;
+                userPhoto.src = currentUser.photo;
+                document.getElementById('userEmail').value = currentUser.email;
+            } else {
+                authWidget.innerHTML = `
+                    <button class="btn-google-login" onclick="loginWithGoogle()">
+                        <i class="fa-brands fa-google" style="color: #4285F4;"></i> Iniciar sesión con Google
+                    </button>
+                `;
+                userName.innerText = "Usuario Invitado";
+                userEmailText.innerText = "Inicia sesión con Google para ver tus puntos";
+                userPhoto.src = "https://via.placeholder.com/55/00f0ff/000000?text=G";
+            }
+
+            accountPoints.innerText = currentUser.points + " PTS";
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const historyBody = document.getElementById('historyBody');
+            if (currentUser.history.length === 0) {
+                historyBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #888;">No hay recargas registradas aún. Haz tu primera compra para ver el historial.</td></tr>`;
+                return;
+            }
+
+            historyBody.innerHTML = currentUser.history.map(item => `
+                <tr>
+                    <td>${item.date}</td>
+                    <td><strong>${item.id}</strong></td>
+                    <td>${item.package}</td>
+                    <td><span style="color: var(--neon-green); font-weight: 700;">${item.status}</span></td>
+                    <td style="color: var(--neon-cyan); font-weight: 700;">+${item.points} PTS</td>
+                </tr>
+            `).join('');
+        }
+
+        function switchTab(tabId, element) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            element.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function getPointsForPackage(pkgText) {
+            if (pkgText.includes("100+10")) return 15;
+            if (pkgText.includes("310+31")) return 45;
+            if (pkgText.includes("520+52")) return 70;
+            if (pkgText.includes("1060+106")) return 140;
+            if (pkgText.includes("2180+218")) return 260;
+            if (pkgText.includes("5600+560")) return 650;
+            return 10;
+        }
+
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+            const id = document.getElementById('playerId').value;
+            const pkg = document.getElementById('package').value;
+            const email = document.getElementById('userEmail').value;
+
+            const earnedPoints = getPointsForPackage(pkg);
+
+            const newOrder = {
+                date: new Date().toLocaleDateString(),
+                id: id,
+                package: pkg.split('(')[0],
+                status: "En Verificación",
+                points: earnedPoints
+            };
+
+            currentUser.points += earnedPoints;
+            currentUser.history.unshift(newOrder);
+            saveData();
+            updateUI();
+
+            const message = `*NUEVO PEDIDO - MX_RECARGASFF*%0A%0A` +
+                            `🎮 *ID del Jugador:* ${id}%0A` +
+                            `💎 *Paquete:* ${pkg}%0A` +
+                            `📧 *Correo Cuenta:* ${email}%0A` +
+                            `🎁 *Puntos Abonados:* +${earnedPoints} PTS%0A` +
+                            `💳 *Número de Cuenta:* 4152 3144 7359 9028%0A%0A` +
+                            `📌 *ADJUNTO MI COMPROBANTE / CAPTURA DE TRANSFERENCIA A CONTINUACIÓN.*`;
+
+            const whatsappUrl = `https://wa.me/525570631464?text=${message}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function redeemPoints(cost, gems) {
+            if (!currentUser.isLoggedIn) {
+                alert("⚠️ Debes iniciar sesión con Google para canjear tus puntos.");
+                return;
+            }
+
+            if (currentUser.points < cost) {
+                alert(`❌ Puntos insuficientes. Necesitas ${cost} PTS y tienes ${currentUser.points} PTS.`);
+                return;
+            }
+
+            const playerId = prompt(`Ingresa tu ID de Free Fire para recibir tu canje gratis de ${gems} Diamantes:`);
+            if (playerId) {
+                currentUser.points -= cost;
+                
+                const redeemOrder = {
+                    date: new Date().toLocaleDateString(),
+                    id: playerId,
+                    package: `CANJE: ${gems} Diamantes`,
+                    status: "En Proceso",
+                    points: -cost
+                };
+                
+                currentUser.history.unshift(redeemOrder);
+                saveData();
+                updateUI();
+
+                const message = `*SOLICITUD DE CANJE DE PUNTOS - MX_RECARGASFF*%0A%0A` +
+                                `🎮 *ID del Jugador:* ${playerId}%0A` +
+                                `🎁 *Recompensa:* ${gems} Diamantes Gratis%0A` +
+                                `⭐ *Puntos Utilizados:* ${cost} PTS%0A` +
+                                `📧 *Correo Cuenta:* ${currentUser.email}`;
+
+                window.open(`https://wa.me/525570631464?text=${message}`, '_blank');
+            }
+        }
+
+        function watchAdSim() {
+            alert('▶️ Viendo video anuncio corto...');
+            setTimeout(() => {
+                currentUser.points += 50;
+                saveData();
+                updateUI();
+                alert('🎉 ¡Felicidades! Se añadieron +50 Puntos a tu cuenta.');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+
