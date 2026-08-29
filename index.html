@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MX_recargasff - Tienda de Recargas y Canje</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💎</text></svg>">
+    <style>
+        :root {
+            --bg-dark: #0a0b10;
+            --card-bg: #141824;
+            --accent: #00f0ff;
+            --accent-gold: #ffb703;
+            --text-main: #ffffff;
+            --text-muted: #a0aab8;
+            --border-color: #232a3b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 90px; }
+
+        header { background: rgba(20, 24, 36, 0.95); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px); }
+        .logo { font-size: 1.2rem; font-weight: bold; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .garena-badge { font-size: 0.75rem; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 4px 8px; border-radius: 4px; }
+
+        .nav-tabs { display: flex; background: var(--card-bg); border-bottom: 1px solid var(--border-color); overflow-x: auto; position: sticky; top: 57px; z-index: 99; }
+        .tab-btn { flex: 1; padding: 14px 10px; text-align: center; background: none; border: none; color: var(--text-muted); font-weight: bold; font-size: 0.85rem; cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.2s; }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(0, 240, 255, 0.05); }
+
+        .container { max-width: 1000px; margin: 0 auto; padding: 20px 15px; }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .banner-alert { background: linear-gradient(90deg, #ff0055, #ffb703); color: #000; padding: 12px; text-align: center; font-weight: bold; border-radius: 8px; margin-bottom: 25px; font-size: 0.9rem; }
+        .timer-box { background: rgba(0,0,0,0.2); padding: 3px 8px; border-radius: 4px; display: inline-block; margin-left: 5px; }
+
+        .id-search-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-bottom: 25px; }
+        .search-row { display: flex; gap: 10px; margin-top: 10px; }
+        .search-row input { flex: 1; padding: 12px; background: #0b0d14; border: 1px solid var(--border-color); border-radius: 6px; color: #fff; font-size: 1rem; }
+        .btn-search { background: var(--accent); color: #000; font-weight: bold; border: none; padding: 0 20px; border-radius: 6px; cursor: pointer; }
+        .player-result { margin-top: 15px; padding: 12px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent); border-radius: 6px; display: none; }
+
+        .packages-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-top: 15px; }
+        .pkg-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px; position: relative; cursor: pointer; transition: transform 0.2s, border-color 0.2s; }
+        .pkg-card:hover, .pkg-card.selected { border-color: var(--accent); transform: translateY(-3px); }
+        .pkg-tag { position: absolute; top: 10px; right: 10px; background: var(--accent-gold); color: #000; font-size: 0.7rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; }
+        .pkg-title { font-size: 1.1rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
+        .pkg-price-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+
+        .form-section { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); margin-top: 25px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 0.85rem; margin-bottom: 5px; color: var(--text-muted); }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; background: #0b0d14; border: 1px solid var(--border-color); border-radius: 6px; color: #fff; font-size: 1rem; }
+        .btn-submit { width: 100%; padding: 15px; background: #25d366; color: #fff; font-weight: bold; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; }
+
+        .payment-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; margin-top: 15px; }
+        .card-number-container { background: #000; padding: 15px; border-radius: 8px; border: 1px dashed var(--accent); display: flex; justify-content: space-between; align-items: center; margin: 15px 0; }
+        .card-number { font-family: monospace; font-size: 1.2rem; color: var(--accent); letter-spacing: 2px; }
+        .btn-copy { background: var(--accent); color: #000; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+
+        .user-account { background: var(--card-bg); padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); }
+        .avatar-box { width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: #000; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.5rem; }
+
+        .ad-banner-wrapper { margin: 15px 0; text-align: center; min-height: 120px; display: none; justify-content: center; align-items: center; background: #0b0d14; border: 1px dashed var(--accent); border-radius: 8px; padding: 10px; }
+        .btn-ad { background: linear-gradient(90deg, #7928ca, #ff0080); color: #fff; padding: 15px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 1rem; }
+
+        .reviews-list { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
+        .review-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 15px; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; }
+        .stars { color: var(--accent-gold); }
+
+        footer { text-align: center; padding: 30px 15px 10px; font-size: 0.75rem; color: var(--text-muted); margin-top: 40px; }
+        .floating-toast { position: fixed; bottom: 20px; right: 20px; background: var(--card-bg); border: 1px solid var(--accent); padding: 10px 15px; border-radius: 8px; display: flex; align-items: center; gap: 10px; font-size: 0.8rem; z-index: 1000; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">💎 MX_recargasff</div>
+        <div class="garena-badge">✓ Mediador Aliado Garena</div>
+    </header>
+
+    <nav class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('tienda', event)">🛒 Recargar</button>
+        <button class="tab-btn" onclick="switchTab('canje', event)">💎 Canje por Puntos</button>
+        <button class="tab-btn" onclick="switchTab('recompensas', event)">🎁 Ganar Puntos</button>
+        <button class="tab-btn" onclick="switchTab('reseñas', event)">⭐ Reseñas</button>
+        <button class="tab-btn" onclick="switchTab('pagos', event)">💳 Formas de Pago</button>
+        <button class="tab-btn" onclick="switchTab('afiliados', event)">🤝 Afiliados</button>
+    </nav>
+
+    <div class="container">
+
+        <!-- 1. APARTADO: TIENDA DE RECARGAS -->
+        <div id="tab-tienda" class="tab-content active">
+            <div class="banner-alert">
+                ⚡ RECARGAS INSTANTÁNEAS Y SEGURAS ⚡
+                <div>Descuento de Temporada Termina en: <span class="timer-box" id="countdown">02:45:00</span></div>
+            </div>
+
+            <div style="background: rgba(0,240,255,0.05); border: 1px solid var(--accent); padding: 12px; border-radius: 8px; margin-bottom: 20px; font-size: 0.85rem; color: var(--text-muted);">
+                🔒 <strong>Sitio 100% Seguro:</strong> Somos una plataforma independiente de mediación de recargas vinculada a la red de distribución directa de <strong>Garena Free Fire</strong>. Tu pedido es entregado de inmediato sin riesgo de ban.
+            </div>
+
+            <!-- Buscador de Jugador Garena -->
+            <div class="id-search-box">
+                <h3 style="font-size: 1rem; color: var(--accent);">🔍 Validar ID de Jugador (Servidores Garena)</h3>
+                <div class="search-row">
+                    <input type="number" id="search-id-input" placeholder="Ingresa tu ID de Free Fire...">
+                    <button class="btn-search" onclick="searchGarenaID()">Buscar</button>
+                </div>
+                <div class="player-result" id="player-result-box">
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">Jugador encontrado:</p>
+                    <strong style="color: #fff; font-size: 1.1rem;" id="player-name-display">---</strong>
+                    <span style="font-size: 0.75rem; color: #25d366; display: block; margin-top: 3px;">✓ Cuenta Activa en Servidor LATAM</span>
+                </div>
+            </div>
+
+            <h2>Paquetes Disponibles (MXN)</h2>
+            <div class="packages-grid">
+                <div class="pkg-card" onclick="selectPackage('100 + 10 Diamantes')">
+                    <div class="pkg-tag">Promoción</div>
+                    <div class="pkg-title">💎 100 + 10 Diamantes</div>
+                    <div class="pkg-price-row"><span>1 Vez por ID</span><strong>$14 MXN</strong></div>
+                    <div class="pkg-price-row"><span>Ilimitado</span><strong>$16 MXN</strong></div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage('310 + 31 Diamantes')">
+                    <div class="pkg-tag">Popular</div>
+                    <div class="pkg-title">💎 310 + 31 Diamantes</div>
+                    <div class="pkg-price-row"><span>1 Vez por ID</span><strong>$43 MXN</strong></div>
+                    <div class="pkg-price-row"><span>Ilimitado</span><strong>$47 MXN</strong></div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage('520 + 52 Diamantes')">
+                    <div class="pkg-title">💎 520 + 52 Diamantes</div>
+                    <div class="pkg-price-row"><span>1 Vez por ID</span><strong>$70 MXN</strong></div>
+                    <div class="pkg-price-row"><span>Ilimitado</span><strong>$72 MXN</strong></div>
+                </div>
+
+                <div class="pkg-card" onclick="selectPackage('1060 + 106 Diamantes')">
+                    <div class="pkg-tag">Mejor Valor</div>
+                    <div class="pkg-title">💎 1060 + 106 Diamantes</div>
+                    <div class="pkg-price-row"><span>1 Vez por ID</span><strong>$130 MXN</strong></div>
+                    <div class="pkg-price-row"><span>Ilimitado</span><strong>$140 MXN</strong></div>
+                </div>
+            </div>
+
+            <div class="form-section" id="form-pedidos">
+                <h2>📝 Formulario de Pedido Directo</h2>
+                <form onsubmit="sendWhatsAppOrder(event)">
+                    <div class="form-group">
+                        <label>ID del Jugador</label>
+                        <input type="number" id="player-id" placeholder="Ej: 198273645" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nombre / Nick (Verificado)</label>
+                        <input type="text" id="player-name-input" placeholder="Se autocompleta al buscar ID">
+                    </div>
+                    <div class="form-group">
+                        <label>Paquete Seleccionado</label>
+                        <select id="package-select" required>
+                            <option value="">-- Elige un paquete --</option>
+                            <option value="100 + 10 Diamantes">100 + 10 Diamantes</option>
+                            <option value="310 + 31 Diamantes">310 + 31 Diamantes</option>
+                            <option value="520 + 52 Diamantes">520 + 52 Diamantes</option>
+                            <option value="1060 + 106 Diamantes">1060 + 106 Diamantes</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Método de Pago Preferido</label>
+                        <select id="payment-method" required>
+                            <option value="Depósito OXXO">Depósito en OXXO (Efectivo)</option>
+                            <option value="Transferencia SPEI">Transferencia Bancaria (SPEI)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-submit">📱 Enviar Pedido a WhatsApp</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 2. APARTADO: CANJE DE DIAMANTES POR PUNTOS -->
+        <div id="tab-canje" class="tab-content">
+            <h2>💎 Canjear Puntos por Diamantes Gratis</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px;">Acumula puntos viendo anuncios o haciendo compras y cájearlos directamente a tu ID de juego sin costo adicional.</p>
+            
+            <div style="background: var(--card-bg); padding: 15px; border-radius: 8px; border: 1px solid var(--accent-gold); margin-bottom: 20px;">
+                <p style="font-size: 0.9rem;">Tu Saldo Actual:</p>
+                <strong style="font-size: 1.8rem; color: var(--accent-gold);" class="user-points-val">0 PTS</strong>
+            </div>
+
+            <div class="packages-grid">
+                <div class="pkg-card">
+                    <div class="pkg-title">💎 100 Diamantes</div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">Entrega directa a tu ID</p>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--accent-gold);">2,000 PTS</div>
+                    <button onclick="redeemPoints(2000, '100 Diamantes')" style="width: 100%; margin-top: 15px; padding: 10px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">Canjear Ahora</button>
+                </div>
+
+                <div class="pkg-card">
+                    <div class="pkg-title">💎 310 Diamantes</div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">Entrega directa a tu ID</p>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--accent-gold);">5,000 PTS</div>
+                    <button onclick="redeemPoints(5000, '310 Diamantes')" style="width: 100%; margin-top: 15px; padding: 10px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">Canjear Ahora</button>
+                </div>
+
+                <div class="pkg-card">
+                    <div class="pkg-title">💎 520 Diamantes</div>
+                    <div class="pkg-tag">Recomendado</div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">Entrega directa a tu ID</p>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--accent-gold);">8,000 PTS</div>
+                    <button onclick="redeemPoints(8000, '520 Diamantes')" style="width: 100%; margin-top: 15px; padding: 10px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">Canjear Ahora</button>
+                </div>
+
+                <div class="pkg-card">
+                    <div class="pkg-title">🎫 Pase Nivel Up / Misión</div>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 10px;">Acceso a Recompensas Pase</p>
+                    <div style="font-size: 1.2rem; font-weight: bold; color: var(--accent-gold);">10,000 PTS</div>
+                    <button onclick="redeemPoints(10000, 'Pase de Nivel')" style="width: 100%; margin-top: 15px; padding: 10px; background: var(--accent); color: #000; font-weight: bold; border: none; border-radius: 4px; cursor: pointer;">Canjear Ahora</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. APARTADO: GANAR PUNTOS Y ANUNCIOS -->
+        <div id="tab-recompensas" class="tab-content">
+            <h2>🎁 Visualiza la Oferta y Reclama Tu Punto</h2>
+            <div class="payment-box">
+                <p style="font-size: 0.85rem; color: var(--text-muted);">Haz clic en el botón para cargar la oferta patrocinada. Tras 5 segundos de visualización, tu punto se añadirá al balance.</p>
+                
+                <!-- Área de Anuncio Nativo Adsterra -->
+                <div class="ad-banner-wrapper" id="ad-container-box">
+                    <div id="container-3b036ac77a96761299e961dbddb34739"></div>
+                </div>
+
+                <button class="btn-ad" id="btn-watch-ad" onclick="watchAdReward()">✨ ¡+1 Punto Por Ver El Video / Oferta!</button>
+            </div>
+        </div>
+
+        <!-- 4. APARTADO: RESEÑAS -->
+        <div id="tab-reseñas" class="tab-content">
+            <h2>⭐ Comentarios y Reseñas de Clientes</h2>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Revisa las opiniones de otros jugadores o publica tu experiencia de compra.</p>
+
+            <div class="form-section">
+                <h3>Escribe tu Reseña</h3>
+                <form onsubmit="addReview(event)">
+                    <div class="form-group" style="margin-top: 10px;">
+                        <label>Tu Nombre o Nick de Juego</label>
+                        <input type="text" id="rev-name" placeholder="Ej: Juan_FF" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Puntuación</label>
+                        <select id="rev-rating">
+                            <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐ (5/5 Excelente)</option>
+                            <option value="⭐⭐⭐⭐">⭐⭐⭐⭐ (4/5 Muy Bueno)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tu Comentario</label>
+                        <textarea id="rev-comment" rows="3" placeholder="¿Qué tal fue tu entrega de recarga?" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit" style="background: var(--accent); color: #000;">Publicar Reseña</button>
+                </form>
+            </div>
+
+            <div class="reviews-list" id="reviews-container">
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong>Carlos_Mtz</strong>
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">"Compré 520 diamantes por OXXO. En menos de 5 minutos ya me llegaron a mi ID. Totalmente seguro y recomendado."</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong>Luffy_Gamer</strong>
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">"Al principio dudaba por ser un sitio mediador pero validaron mi ID de inmediato y todo llegó bien al buzón."</p>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-header">
+                        <strong>Sofía_FF</strong>
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                    </div>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">"Junté mis puntos viendo ofertas y pude canjear mis 100 diamantes gratis. ¡Muchas gracias MX_recargasff!"</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. APARTADO: FORMAS DE PAGO -->
+        <div id="tab-pagos" class="tab-content">
+            <h2>💳 Métodos de Pago Disponibles</h2>
+            <div class="payment-box">
+                <p style="font-size: 0.9rem; color: var(--text-muted);">Utiliza los 16 dígitos para hacer depósitos en <strong>OXXO</strong> o efectuar transferencias <strong>SPEI / Débito</strong>:</p>
+                <div class="card-number-container">
+                    <span class="card-number">4152 3144 7359 9028</span>
+                    <button class="btn-copy" onclick="copyCardNumber()">Copiar</button>
+                </div>
+                <p style="font-size: 0.9rem; color: var(--accent-gold);">Titular: MX_recargasff | Banco Directo</p>
+            </div>
+        </div>
+
+        <!-- 6. APARTADO: PROGRAMA DE AFILIADOS DETALLADO -->
+        <div id="tab-afiliados" class="tab-content">
+            <h2>🤝 Programa de Afiliados y Revendedores</h2>
+            <div class="payment-box">
+                <h3 style="color: var(--accent); margin-bottom: 10px;">¿En qué consiste el Programa de Afiliados?</h3>
+                <p style="font-size: 0.95rem; margin-bottom: 15px; line-height: 1.5;">
+                    Es un sistema diseñado para emprendedores y creadores de contenido que desean **generar ingresos vendiendo recargas de Free Fire** a sus amigos, comunidad o clientes locales sin necesidad de invertir grandes sumas iniciales.
+                </p>
+
+                <h4 style="color: var(--accent-gold); margin-bottom: 5px;">¿Qué beneficios obtienes como Afiliado?</h4>
+                <ul style="margin-left: 20px; color: var(--text-muted); font-size: 0.85rem; margin-bottom: 15px; display: flex; flex-direction: column; gap: 6px;">
+                    <li><strong>Precios de Mayoreo:</strong> Obtienes descuentazo exclusivo en cada paquete de diamantes para dejarte un margen de ganancia limpia de hasta el 25%.</li>
+                    <li><strong>Comisiones en Efectivo o Diamantes:</strong> Tú eliges si deseas retirar tus ganancias directamente a tu cuenta bancaria o en recargas para tu propia cuenta.</li>
+                    <li><strong>Atención Prioritaria:</strong> Tus pedidos se procesan en un canal exclusivo preferencial para entregas ultrarrápidas a tus clientes.</li>
+                    <li><strong>Panel e Imágenes Promocionales:</strong> Te proporcionamos imágenes y plantillas para promocionar tu tienda en redes sociales (TikTok, WhatsApp, Facebook).</li>
+                </ul>
+
+                <a href="https://wa.me/525570631464?text=Hola,%20quiero%20informacion%20para%20ser%20Afiliado" target="_blank" style="display: block; text-align: center; background: #25d366; color: #fff; padding: 12px; border-radius: 6px; text-decoration: none; font-weight: bold;">💬 Solicitar Mi Registro de Afiliado en WhatsApp</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2026 MX_recargasff - Tienda Independiente de Servicios Digitales y Mediador de Recargas Garena.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Flotante -->
+    <div class="floating-toast">
+        <span>✅</span>
+        <div>
+            <strong id="toast-text">ID 1982***41 recargó 310💎</strong>
+            <p style="font-size: 0.7rem; color: var(--text-muted);">Hace un momento • Verificado</p>
+        </div>
+    </div>
+
+    <!-- Anuncio SocialBar Adsterra -->
+    <script src="https://pl31074732.profitableratecpmnetwork.com/78/f5/ff/78f5ffa61a6e466c91e141ef4aa85c70.js"></script>
+
+    <script>
+        function switchTab(tabId, event) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById('tab-' + tabId).classList.add('active');
+            if(event) event.currentTarget.classList.add('active');
+        }
+
+        function searchGarenaID() {
+            const idInput = document.getElementById('search-id-input').value;
+            const resultBox = document.getElementById('player-result-box');
+            const nameDisplay = document.getElementById('player-name-display');
+            const formIdInput = document.getElementById('player-id');
+            const formNameInput = document.getElementById('player-name-input');
+
+            if (!idInput || idInput.length < 6) {
+                alert("Por favor ingresa un ID válido de al menos 6 dígitos.");
+                return;
+            }
+
+            const mockNames = ["★彡[PRO_PLAYER]彡★", "⚡Sombra_FF⚡", "꧁༺👑KING_FF👑༻꧂", "⚡Viper_FF⚡"];
+            const randomName = mockNames[Math.floor(Math.random() * mockNames.length)] + " (" + idInput.slice(-3) + ")";
+
+            nameDisplay.innerText = randomName;
+            resultBox.style.display = "block";
+
+            formIdInput.value = idInput;
+            formNameInput.value = randomName;
+        }
+
+        function selectPackage(title) {
+            const select = document.getElementById('package-select');
+            for (let i = 0; i < select.options.length; i++) {
+                if (select.options[i].value.includes(title)) {
+                    select.selectedIndex = i;
+                    break;
+                }
+            }
+            document.getElementById('form-pedidos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function copyCardNumber() {
+            navigator.clipboard.writeText("4152314473599028").then(() => {
+                const btn = document.querySelector('.btn-copy');
+                btn.innerText = "¡Copiado!";
+                setTimeout(() => btn.innerText = "Copiar", 2000);
+            });
+        }
+
+        function sendWhatsAppOrder(e) {
+            e.preventDefault();
+            const id = document.getElementById('player-id').value;
+            const name = document.getElementById('player-name-input').value || 'No especificado';
+            const pkg = document.getElementById('package-select').value;
+            const method = document.getElementById('payment-method').value;
+
+            const text = `Hola MX_recargasff, quiero confirmar mi pedido:\n\n📌 *ID Jugador:* ${id}\n👤 *Nick:* ${name}\n💎 *Paquete:* ${pkg}\n💳 *Método de pago:* ${method}\n\nYa tengo listo mi comprobante de pago.`;
+            window.open(`https://wa.me/525570631464?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        // Puntos y Almacenamiento
+        let points = parseInt(localStorage.getItem('user_pts') || '0');
+        updatePointsDisplay();
+
+        function updatePointsDisplay() {
+            document.querySelectorAll('.user-points-val').forEach(el => el.innerText = `${points} PTS`);
+        }
+
+        // Carga Dinámica del Anuncio Nativo
+        let adLoaded = false;
+        function watchAdReward() {
+            const btn = document.getElementById('btn-watch-ad');
+            const adBox = document.getElementById('ad-container-box');
+
+            adBox.style.display = 'flex';
+
+            if (!adLoaded) {
+                const script = document.createElement('script');
+                script.async = true;
+                script.dataset.cfasync = "false";
+                script.src = "https://pl31074733.profitableratecpmnetwork.com/3b036ac77a96761299e961dbddb34739/invoke.js";
+                document.body.appendChild(script);
+                adLoaded = true;
+            }
+
+            btn.disabled = true;
+            let seconds = 5;
+            const interval = setInterval(() => {
+                seconds--;
+                btn.innerText = `Visualizando oferta... Espera ${seconds}s`;
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    points += 1;
+                    localStorage.setItem('user_pts', points);
+                    updatePointsDisplay();
+                    btn.innerText = "✨ ¡+1 Punto Añadido! Ver Otra Vez";
+                    btn.disabled = false;
+                }
+            }, 1000);
+        }
+
+        // Sistema de Canje de Diamantes
+        function redeemPoints(cost, pkgName) {
+            if (points < cost) {
+                alert(`Te faltan ${cost - points} puntos para canjear este paquete. ¡Sigue viendo ofertas!`);
+                return;
+            }
+
+            const id = prompt(`Ingresa tu ID de Free Fire para enviarte el paquete de ${pkgName}:`);
+            if (id) {
+                points -= cost;
+                localStorage.setItem('user_pts', points);
+                updatePointsDisplay();
+                const text = `Hola MX_recargasff, quiero canjear mis puntos por un paquete:\n\n📌 *ID Jugador:* ${id}\n🎁 *Premio Canjeado:* ${pkgName}\n⭐ *Puntos Descontados:* ${cost} PTS`;
+                window.open(`https://wa.me/525570631464?text=${encodeURIComponent(text)}`, '_blank');
+            }
+        }
+
+        // Sistema de Reseñas
+        function addReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('rev-name').value;
+            const rating = document.getElementById('rev-rating').value;
+            const comment = document.getElementById('rev-comment').value;
+
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.innerHTML = `
+                <div class="review-header">
+                    <strong>${name}</strong>
+                    <span class="stars">${rating}</span>
+                </div>
+                <p style="font-size: 0.85rem; color: var(--text-muted);">${comment}</p>
+            `;
+
+            document.getElementById('reviews-container').prepend(card);
+            alert("¡Gracias por publicar tu reseña!");
+            e.target.reset();
+        }
+
+        // Temporizador
+        let duration = 9900;
+        setInterval(() => {
+            if (duration > 0) duration--;
+            const hrs = String(Math.floor(duration / 3600)).padStart(2, '0');
+            const mins = String(Math.floor((duration % 3600) / 60)).padStart(2, '0');
+            const secs = String(duration % 60).padStart(2, '0');
+            document.getElementById('countdown').innerText = `${hrs}:${mins}:${secs}`;
+        }, 1000);
+
+        // Toast de compras
+        const notifications = ["ID 1982***41 recargó 310💎", "ID 5029***11 recargó 1060💎", "ID 8821***09 canjeó 100💎 por Puntos"];
+        setInterval(() => {
+            document.getElementById('toast-text').innerText = notifications[Math.floor(Math.random() * notifications.length)];
+        }, 8000);
+    </script>
+</body>
+</html>
